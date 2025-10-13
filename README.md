@@ -1,27 +1,36 @@
-# AngularExample
+Yksikkötestiraportti
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+*Tavoite
+Toteuttaa vähintään viisi yksikkötestiä luokkien *metodeille* ja testata mm. raja-arvot ja virhetilanteet.
 
-## Development server
+*Testattava luokka
+`MathService` (`src/app/services/math.service.ts`)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+*Metodit
+- `add(a,b)`: summa
+- `subtract(a,b)`: erotus
+- `multiply(a,b)`: tulo
+- `divide(a,b)`: osamäärä, heittää virheen jos `b === 0`
+- `power(a,b)`: potenssi
+- `clamp(x,min,max)`: rajoittaa arvon välille `[min,max]`, heittää virheen jos `min > max`
 
-## Code scaffolding
+*Testit (specit) ja tarkoitus
+1. **adds positive numbers** – peruspaluuarvo
+2. **subtract can yield negative result** – negatiivinen tulos
+3. **multiplies by zero -> zero** – raja-arvo, nolla
+4. **divides normally** – peruspaluuarvo
+5. **throws on division by zero** – virheraja-arvo
+6. **power with zero exponent is 1** – raja-arvo
+7. **clamp caps below min to min** – raja-arvo (alapuoli)
+8. **clamp throws when min > max** – virheellinen syöte
+![Uploading Näyttökuva 2025-10-13 133325.png…]()
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+*Tulokset
+- Kaikki testit läpäisy: **X specs, 0 failures** (Karman tuloste).
+<img width="1270" height="615" alt="image" src="https://github.com/user-attachments/assets/4282228a-2abb-4309-bf05-8e708e671e2e" />
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+*Lähdekoodi
+- `src/app/services/math.service.ts`
+- `src/app/services/math.service.spec.ts`
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
