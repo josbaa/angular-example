@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,8 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css'
 })
-export class FeedbackComponent {
-  headerText: string = "Give feedback";
+export class FeedbackComponent implements OnInit {
+  headerText = "Give feedback";
 
   fbForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z ]*$')]),
