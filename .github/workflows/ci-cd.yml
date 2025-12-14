@@ -73,20 +73,23 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
   release_smoke_test:
-    needs: docker_build_and_publish
-    runs-on: ubuntu-latest
-    steps:
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  runs-on: ubuntu-latest
+  needs: docker_build_and_publish
+  steps:
+    - name: Run container
+      run: |
+        docker run -d --name angular_app -p 8080:80 ghcr.io/${{ github.repository }}:latest
 
-      - run: docker pull ghcr.io/${{ github.repository }}:latest
-
-      - run: |
-          docker run -d --rm --name angular_app \
-            -p 8080:80 \
-            ghcr.io/${{ github.repository }}:latest
-
-      - run: curl -fsS http://localhost:8080/
+    - name: Wait for container to be ready
+      run: |
+        for i in {1..20}; do
+          if curl -fsS http://localhost:8080/; then
+            echo "App is up"
+            exit 0
+          fi
+          echo "Waiting for app..."
+          sleep 2
+        done
+        echo "App did not start in time"
+        docker logs angular_app || true
+        exit 1
