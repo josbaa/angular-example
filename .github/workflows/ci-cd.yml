@@ -37,9 +37,10 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - name: Test
-        env:
-          CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
-        run: npx ng test --watch=false --browsers=ChromeHeadless
+        run: npx ng test --watch=false
+
+        
+        
 
   docker_build_and_publish:
     needs: build_and_test
